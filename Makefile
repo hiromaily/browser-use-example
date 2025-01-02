@@ -42,11 +42,11 @@ set-env:
 #------------------------------------------------------------------------------
 .PHONY: lint
 lint:
-	@#import文を自動整理す
+	@# format import
 	poetry run isort src
-	@#PEP8に準拠したフォーマット
+	@# format by PEP8
 	poetry run black src
-	@#文法チェック
+	@# lint
 	poetry run flake8 src
 
 .PHONY: run

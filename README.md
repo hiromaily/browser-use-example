@@ -1,9 +1,12 @@
 # browser-use-example
 
+Example of how to use [browser-use](https://github.com/browser-use/browser-use)
+
 ## Requirements
 
 - [asdf](https://asdf-vm.com/) for installing Python 3.12
 - [poetry](https://python-poetry.org/)
+- [OpenAI API Key](https://platform.openai.com/docs/api-reference/authentication)
 
 ## Setup environment variable
 

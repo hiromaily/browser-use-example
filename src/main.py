@@ -5,6 +5,8 @@ from browser_use import Agent
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 
+from task import tasks
+
 # .envファイルの内容を読み込む
 load_dotenv()
 
@@ -12,30 +14,19 @@ load_dotenv()
 async def main():
     # 環境変数からAPIキーを取得
     api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        raise ValueError("API key for OpenAI is not set")
+    openai_model = os.getenv("OPENAI_MODEL")
+    if not api_key or not openai_model:
+        raise ValueError("API key or OpenAI model for OpenAI is not set")
+
+    # task key
+    task_key = "price_monitoring"
+    task = tasks.get(task_key)
+    if not task:
+        raise ValueError(f"Task {task_key} is not found")
 
     agent = Agent(
-        task="""
-あなたは価格監視のエージェントです。
-まず、3つの異なるショッピング用のURLを与えます。
-- https://amzn.asia/d/cYPx8wA
-- https://item.rakuten.co.jp/curaprox/73327440/
-- https://store.shopping.yahoo.co.jp/phatee/curaprox-cs5460-1.html
-
-各ページの対象商品名に含まれるキーワードは以下の通りです。
-- クラプロックス
-- 歯ブラシ
-- CS5460。
-
-下記の形式でデータを教えてください。
-- サイト名 (例えば、Amazon, 楽天, Yahoo)
-- 商品名
-- 価格
-- 送料(なけれな0円)
-- ポイント(なけれな0円)
-""",
-        llm=ChatOpenAI(model="gpt-4o"), # gpt-4o, gpt-4, gpt-3.5-turbo 
+        task=task,
+        llm=ChatOpenAI(model=openai_model),
     )
     result = await agent.run()
     print(result)

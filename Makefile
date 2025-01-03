@@ -5,7 +5,7 @@
 install-python:
 	asdf plugin add python
 	asdf install python 3.12.8
-	asdf local python 3.12.8
+	asdf global python 3.12.8
 	python -V
 
 # https://python-poetry.org/docs/#installing-with-the-official-installer
@@ -14,11 +14,13 @@ install-poetry:
 	curl -sSL https://install.python-poetry.org | python3 -
 	poetry --version
 
+# no needs to run. just memo
 .PHONY: create-project
 create-project:
 	poetry new browser-use-example
 	#poetry init
 
+# no needs to run. just memo
 .PHONY: install-dependencies
 install-dependencies:
 	poetry add browser-use playwright
@@ -36,7 +38,8 @@ install-playwright:
 .PHONY: set-env
 set-env:
 	poetry env use 3.12.8
-	poetry install
+	#poetry install
+	poetry install --no-root
 
 #------------------------------------------------------------------------------
 # dev

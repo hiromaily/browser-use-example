@@ -21,7 +21,8 @@ create-project:
 
 .PHONY: install-dependencies
 install-dependencies:
-	poetry add browser-use playwright python-dotenv
+	poetry add browser-use playwright
+	poetry add python-dotenv argparse
 	poetry add -D flake8 black isort mypy pytest
 	poetry add --group dev Flake8-pyproject
 
@@ -49,6 +50,11 @@ lint:
 	@# lint
 	poetry run flake8 src
 
+# run price_monitoring task
 .PHONY: run
 run:
 	poetry run python src/main.py
+
+# .PHONY: run
+# run:
+# 	poetry run python src/main.py --task foobar

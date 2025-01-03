@@ -1,3 +1,4 @@
+import argparse
 import asyncio
 import os
 
@@ -7,20 +8,26 @@ from langchain_openai import ChatOpenAI
 
 from task import tasks
 
-# .envファイルの内容を読み込む
+# load .env file
 load_dotenv()
 
 
 async def main():
-    # 環境変数からAPIキーを取得
+    # environment variables
     api_key = os.getenv("OPENAI_API_KEY")
     openai_model = os.getenv("OPENAI_MODEL")
     if not api_key or not openai_model:
         raise ValueError("API key or OpenAI model for OpenAI is not set")
 
+    # parse command line arguments
+    parser = argparse.ArgumentParser(description="command line parser")
+    # parser.add_argument('task', type=str, help="task name") # required
+    parser.add_argument("--task", type=str, default="price_monitoring", help="task key")
+    args = parser.parse_args()
+    print("task:", args.task)
+
     # task key
-    task_key = "price_monitoring"
-    task = tasks.get(task_key)
+    task = tasks.get(args.task)
     if not task:
         raise ValueError(f"Task {task_key} is not found")
 

@@ -10,6 +10,7 @@ python = "^3.12"
 playwright = "^1.49.1"
 browser-use = "^0.1.17"
 python-dotenv = "^1.0.1"
+argparse = "^1.4.0"
 
 
 [tool.poetry.group.dev.dependencies]

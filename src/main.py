@@ -22,14 +22,16 @@ async def main():
     # parse command line arguments
     parser = argparse.ArgumentParser(description="command line parser")
     # parser.add_argument('task', type=str, help="task name") # required
-    parser.add_argument("--task", type=str, default="price_monitoring", help="task key")
+    parser.add_argument(
+        "--taskkey", type=str, default="price_monitoring", help="task key"
+    )
     args = parser.parse_args()
-    print("task:", args.task)
+    print("task_key:", args.taskkey)
 
     # task key
-    task = tasks.get(args.task)
+    task = tasks.get(args.taskkey)
     if not task:
-        raise ValueError(f"Task {task_key} is not found")
+        raise ValueError(f"Task key: {args.taskkey} is not found")
 
     agent = Agent(
         task=task,
